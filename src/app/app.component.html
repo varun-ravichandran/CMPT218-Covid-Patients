@@ -1,0 +1,24 @@
+<div #gmap style="width:100%;height:400px"></div>
+
+<app-patient 
+    [patients]="patients" 
+    (deletePatientEvent) = "deletePatient($event)"
+    >
+</app-patient>
+
+<button (click) = "open(addNewPatient)" class="btn btn-primary btn-block" >CREATE COVID REPORT</button>
+
+<!-- Add new patient pop up  -->
+<ng-template #addNewPatient let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-patient-add">New Patient</h4>
+    </div>
+    <div class="modal-body">
+        <app-patient-form
+        (addPatientEvent) = "addPatient($event)"
+        (closeModalEvent) = "modal.close()"
+        >
+        </app-patient-form>
+    </div>
+</ng-template>
+

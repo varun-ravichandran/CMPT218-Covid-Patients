@@ -1,0 +1,84 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <td>Name</td>
+                <td class="patientForm">
+                    <input type="text" name="name" placeholder="Enter Patient's name" formControlName="name"
+                        [ngClass]="form.get('name').errors" required>
+                    <div *ngIf="form.get('name').invalid" class="errorMessage patientForm">
+                        <div *ngIf="form.get('name').errors.required">*Name required</div>
+                        <div *ngIf="form.get('name').errors.pattern">*Enter only alphabets</div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>Age</td>
+                <td class="patientForm">
+                    <input type="text" name="age" placeholder="Enter Patient's age" formControlName="age" required>
+                    <div *ngIf="form.get('age').invalid" class="errorMessage patientForm">
+                        <div *ngIf="form.get('age').errors.required">*Age required</div>
+                        <div *ngIf="form.get('age').errors.pattern">*Enter only numbers</div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>Phone Number</td>
+                <td class="patientForm">
+                    <input type="text" name="phoneNumber" placeholder="Enter Patient's number"
+                        formControlName="phoneNumber" required>
+                    <div *ngIf="form.get('phoneNumber').invalid" class="errorMessage patientForm">
+                        <div *ngIf="form.get('phoneNumber').errors.required">*Phone Number required</div>
+                        <div *ngIf="form.get('phoneNumber').errors.maxLength">*Enter valid phone number below 10</div>
+                        <div *ngIf="form.get('phoneNumber').errors.pattern">*Enter only numbers</div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>Location</td>
+                <td>
+                    <label>
+                        <input type="radio" name="locationType" value="existing" placeholder="location"
+                            formControlName="locationType"> Existing Location
+                    </label>
+                    <span *ngIf="locationType==='existing'">
+                        <select formControlName="existingLocation">
+                            <option [value]="location.value" *ngFor="let location of defaultLocations">
+                                {{location.label}}</option>
+                        </select>
+                    </span>
+                    <br>
+                    <span *ngIf="locationType==='search'"> Search: <input type="text" name="manualSearch"
+                            placeholder="Enter Patient's location" formControlName="searchLocation">
+                        <button type="button" (click)="findGeoCodeAddress()" (click)="isTrue = true">search</button> <br>
+                        <mat-hint>Click search!</mat-hint>
+                    </span>
+                </td>
+
+                <td>
+                    <label>
+                        <input type="radio" name="locationType" value="search" placeholder="Enter location"
+                            formControlName="locationType"> Add New Location
+                    </label>
+
+                </td>
+
+
+            </tr>
+            <tr>
+                <td>Email</td>
+                <td  class="patientForm">
+                    <input type="text" name="email" placeholder="Enter Patient's email" formControlName="emailId">
+                    <div *ngIf="form.get('emailId').invalid" class="errorMessage patientForm" required>
+                        <div *ngIf="form.get('emailId').errors.required">*Email required</div>
+                        <div *ngIf="form.get('emailId').errors.email">*Enter valid email Id</div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td><button class="btn btn-primary" [disabled]="!form.valid">Save</button></td>
+                <td><button type="button" class="btn btn-outline-dark" (click)="closeModal()">close</button></td>
+            </tr>
+        </thead>
+    </table>
+</form>
